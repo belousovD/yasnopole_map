@@ -902,6 +902,8 @@
       let startX, startY;
       let offsetX = 0;
       let offsetY = 0;
+      let initialX = 0;
+      let initialY = 0;
 
       map.addEventListener('mousedown', startDragging);
       map.addEventListener('mousemove', drag);
@@ -933,9 +935,9 @@
         const touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
+        initialX = offsetX;
+        initialY = offsetY;
         isDragging = false;
-        offsetX = 0;
-        offsetY = 0;
       });
 
       map.addEventListener('touchmove', event => {
@@ -944,15 +946,11 @@
           const touch = event.touches[0];
           const currentX = touch.clientX;
           const currentY = touch.clientY;
-          const deltaX = currentX - startX - offsetX;
-          const deltaY = currentY - startY - offsetY;
-          map.style.left = `${deltaX}px`;
-          map.style.top = `${deltaY}px`;
+          offsetX = currentX - startX + initialX;
+          offsetY = currentY - startY + initialY;
+          map.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         } else {
           isDragging = true;
-          const touch = event.touches[0];
-          offsetX = touch.clientX - startX;
-          offsetY = touch.clientY - startY;
         }
       });
 
