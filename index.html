@@ -944,9 +944,12 @@
           const touch = event.touches[0];
           const currentX = touch.clientX;
           const currentY = touch.clientY;
-          const deltaX = currentX - startX - offsetX;
-          const deltaY = currentY - startY - offsetY;
-          map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+          const mapRect = map.getBoundingClientRect(); // Получаем позицию элемента на странице
+          const deltaX =
+            currentX - startX - offsetX + window.scrollX - mapRect.left;
+          const deltaY =
+            currentY - startY - offsetY + window.scrollY - mapRect.top;
+            map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         } else {
           isDragging = true;
           const touch = event.touches[0];
