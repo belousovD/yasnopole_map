@@ -18,19 +18,25 @@
         padding: 0;
         font-family: 'Montserrat', sans-serif;
       }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
       .container {
         max-width: 1200px;
         max-height: 500px;
         position: relative;
         overflow: hidden;
+        border: 2px solid black;
       }
       .wrapper {
         width: 100%;
         height: 100%;
-        overflow: hidden;
         position: relative;
 
-        background-color: #fbbb01;
+        background-color: #fff;
       }
       .map {
         position: relative;
@@ -100,11 +106,11 @@
 
       .zoom-container {
         position: absolute;
-        right: 30px;
-        top: 50%;
+        right: 10px;
+        top: 10px;
         display: flex;
-        flex-direction: column;
-        height: 100px;
+        flex-direction: row;
+        width: 100px;
         justify-content: space-between;
         font-size: 30px;
 
@@ -118,12 +124,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid #ccc;
-        background-color: rgba(160, 160, 160, 0.9);
+        background-color: rgba(251, 187, 1, 0.9);
       }
 
       .zoom-container > div:hover {
-        background-color: #fbbb01;
+        background-color: rgba(160, 160, 160, 0.9);
       }
     </style>
   </head>
