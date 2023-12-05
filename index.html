@@ -899,7 +899,9 @@
       });
 
       let isDragging = false;
-      let startX, startY, offsetX, offsetY;
+      let startX, startY;
+      let offsetX = 0;
+      let offsetY = 0;
 
       map.addEventListener('mousedown', startDragging);
       map.addEventListener('mousemove', drag);
@@ -931,18 +933,25 @@
         const touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
-        isDragging = false; // Изначально не считаем это перетаскивание
+        isDragging = false;
+        offsetX = 0;
+        offsetY = 0;
       });
 
       map.addEventListener('touchmove', event => {
         if (isDragging) {
           event.preventDefault();
           const touch = event.touches[0];
-          const deltaX = touch.clientX - startX;
-          const deltaY = touch.clientY - startY;
+          const currentX = touch.clientX;
+          const currentY = touch.clientY;
+          const deltaX = currentX - startX - offsetX;
+          const deltaY = currentY - startY - offsetY;
           map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         } else {
-          isDragging = true; // Началось перетаскивание
+          isDragging = true;
+          const touch = event.touches[0];
+          offsetX = touch.clientX - startX;
+          offsetY = touch.clientY - startY;
         }
       });
 
