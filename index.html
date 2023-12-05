@@ -931,17 +931,19 @@
         const touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
-        isDragging = true;
-        event.preventDefault(); // Отменяем стандартное поведение
+        isDragging = false; // Изначально не считаем это перетаскивание
       });
 
       map.addEventListener('touchmove', event => {
-        if (!isDragging) return;
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-        map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        event.preventDefault(); // Отменяем стандартное поведение
+        if (isDragging) {
+          event.preventDefault();
+          const touch = event.touches[0];
+          const deltaX = touch.clientX - startX;
+          const deltaY = touch.clientY - startY;
+          map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        } else {
+          isDragging = true; // Началось перетаскивание
+        }
       });
 
       map.addEventListener('touchend', () => {
