@@ -932,6 +932,7 @@
         startX = touch.clientX;
         startY = touch.clientY;
         isDragging = true;
+        event.preventDefault(); // Отменяем стандартное поведение
       });
 
       map.addEventListener('touchmove', event => {
@@ -940,6 +941,7 @@
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
         map.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        event.preventDefault(); // Отменяем стандартное поведение
       });
 
       map.addEventListener('touchend', () => {
