@@ -25,9 +25,8 @@
         height: 100vh;
       }
       .container {
-        width: 95vw;
-        max-width: 1600px;
-        height: 80vh;
+        width: 1400px;
+        height: 800px;
         position: relative;
         overflow: hidden;
         border: 2px solid black;
@@ -131,7 +130,6 @@
       .zoom-container > div:hover {
         background-color: rgba(160, 160, 160, 0.9);
       }
-
 
       @media (max-width: 600px) {
         .container {
@@ -494,21 +492,7 @@
       </div>
 
       <div class="modal-container hidden">
-        <div class="modal">
-          <img
-            src="gost.jpg"
-            alt="map-bg"
-            style="
-              width: 100%;
-              height: 100%;
-              overflow: hidden;
-              object-fit: cover;
-            "
-          />
-          <h1 class="modal-name"></h1>
-          <p class="modal-description"></p>
-          <a href="" class="modal-link"></a>
-        </div>
+        <div class="modal"></div>
       </div>
     </div>
 
@@ -746,9 +730,8 @@
         },
         'a-dom': {
           name: '"А"-дом',
-          description:
-            'Первый образец всесезонного модульного дома в экопарке.',
-          link: '/link',
+          description: '',
+          link: '',
           imageLinks: ['test', 'test'],
         },
         'gostevoy-dom-sharik-10': {
@@ -857,33 +840,68 @@
       buildingsDots.forEach(e => {
         e.addEventListener('click', event => {
           modalC.classList.remove('hidden');
-
-          if (buildingsDescription[e.dataset.id].name)
-            modal.querySelector('h1').textContent =
+          if (buildingsDescription[e.dataset.id].imageLinks.length > 0) {
+            modal
+              .appendChild(document.createElement('img'))
+              .classList.add('modal-image');
+            modal.querySelector('.modal-image').src = '/gost.jpg';
+          }
+          if (buildingsDescription[e.dataset.id].name !== '') {
+            modal
+              .appendChild(document.createElement('h1'))
+              .classList.add('modal-name');
+            modal.querySelector('.modal-name').textContent =
               buildingsDescription[e.dataset.id].name;
-          if (buildingsDescription[e.dataset.id].description)
-            modal.querySelector('p').textContent =
+          }
+          if (buildingsDescription[e.dataset.id].description !== '') {
+            modal
+              .appendChild(document.createElement('p'))
+              .classList.add('modal-description');
+            modal.querySelector('.modal-description').textContent =
               buildingsDescription[e.dataset.id].description;
-          if (buildingsDescription[e.dataset.id].link)
-            modal.querySelector('a').href =
+          }
+          if (buildingsDescription[e.dataset.id].link !== '') {
+            modal
+              .appendChild(document.createElement('a'))
+              .classList.add('modal-link');
+            modal.querySelector('.modal-link').href =
               buildingsDescription[e.dataset.id].link;
-          if (buildingsDescription[e.dataset.id].link)
-            modal.querySelector('a').textContent = `Перейти на страницу ${
+            modal.querySelector(
+              '.modal-link'
+            ).textContent = `Перейти на страницу ${
               buildingsDescription[e.dataset.id].name
             }`;
+          }
         });
       });
+
+      const changeItem = () => {
+        const randomIndex = Math.floor(Math.random() * buildingsDots.length);
+        const randomElement = buildingsDots[randomIndex];
+        const previousStrokeWidth = randomElement.style.strokeWidth;
+        const previousFill = randomElement.style.fill;
+        randomElement.style.strokeWidth = '30px';
+        randomElement.style.fill = '#fbbb01';
+        setTimeout(() => {
+          randomElement.style.strokeWidth = previousStrokeWidth;
+          randomElement.style.fill = previousFill;
+        }, 1500);
+      };
+
+      setInterval(changeItem, 2500);
 
       modalC.addEventListener('click', e => {
         const withinBoundaries = e.composedPath().includes(modal);
         if (!withinBoundaries) {
           modalC.classList.toggle('hidden');
+          modal.innerHTML = '';
         }
       });
 
       document.addEventListener('keydown', function (e) {
         if (e.keyCode == 27) {
           modalC.classList.add('hidden');
+          modal.innerHTML = '';
         }
       });
 
