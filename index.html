@@ -876,7 +876,7 @@
       });
 
       const changeItem = () => {
-        const randomIndex = Math.floor(Math.random() * buildingsDots.length);
+        const randomIndex = Math.floor(Math.random() * 10);
         const randomElement = buildingsDots[randomIndex];
         const previousStrokeWidth = randomElement.style.strokeWidth;
         const previousFill = randomElement.style.fill;
@@ -890,9 +890,9 @@
         textElement.textContent = 'Нажми на меня';
         textElement.setAttribute(
           'x',
-          Number(randomElement.getAttribute('cx')) + 30
+          Number(randomElement.getAttribute('cx')) + 70
         );
-        textElement.setAttribute('y', randomElement.getAttribute('cy'));
+        textElement.setAttribute('y', randomElement.getAttribute('cy') - 95);
         textElement.setAttribute('fill', '#fafafa');
         textElement.setAttribute('text-anchor', 'start');
         textElement.setAttribute('alignment-baseline', 'middle');
@@ -904,28 +904,46 @@
         );
         rectElement.setAttribute(
           'x',
-          Number(randomElement.getAttribute('cx')) + 10
+          Number(randomElement.getAttribute('cx')) + 50
         );
-        rectElement.setAttribute('y', randomElement.getAttribute('cy') - 50);
-        rectElement.setAttribute(
-          'width',
-          435
-        ); // Adjust the padding as needed
+        rectElement.setAttribute('y', randomElement.getAttribute('cy') - 150);
+        rectElement.setAttribute('width', 435); // Adjust the padding as needed
         rectElement.setAttribute('height', 98); // Adjust the height as needed
         rectElement.setAttribute('fill', 'rgb(251, 187, 1)');
 
+        const arrowElement = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          'path'
+        );
+        arrowElement.setAttribute(
+          'd',
+          `M ${Number(
+            randomElement.getAttribute('cx')
+          )},${randomElement.getAttribute('cy')} Q ${
+            Number(randomElement.getAttribute('cx')) - 30
+          },${randomElement.getAttribute('cy') - 130} ${
+            Number(randomElement.getAttribute('cx')) + 100
+          },${randomElement.getAttribute('cy') - 100}`
+        );
+        arrowElement.setAttribute('stroke', 'rgb(251, 187, 1)');
+        arrowElement.setAttribute('stroke-width', '20');
+        arrowElement.setAttribute('fill', 'transparent');
+
+        randomElement.parentNode.prepend(arrowElement);
+        randomElement.parentNode.append(rectElement);
         randomElement.parentNode.append(textElement);
-        randomElement.parentNode.prepend(rectElement);
 
         setTimeout(() => {
           randomElement.style.strokeWidth = previousStrokeWidth;
           randomElement.style.fill = previousFill;
           randomElement.parentNode.removeChild(textElement);
           randomElement.parentNode.removeChild(rectElement);
-        }, 2500);
+          randomElement.parentNode.removeChild(arrowElement);
+        }, 3500);
       };
 
-      setInterval(changeItem, 4000);
+      changeItem();
+      setInterval(changeItem, 5000);
 
       modalC.addEventListener('click', e => {
         const withinBoundaries = e.composedPath().includes(modal);
