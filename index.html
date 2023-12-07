@@ -882,13 +882,50 @@
         const previousFill = randomElement.style.fill;
         randomElement.style.strokeWidth = '30px';
         randomElement.style.fill = '#fbbb01';
+
+        const textElement = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          'text'
+        );
+        textElement.textContent = 'Нажми на меня';
+        textElement.setAttribute(
+          'x',
+          Number(randomElement.getAttribute('cx')) + 30
+        );
+        textElement.setAttribute('y', randomElement.getAttribute('cy'));
+        textElement.setAttribute('fill', 'black');
+        textElement.setAttribute('text-anchor', 'start');
+        textElement.setAttribute('alignment-baseline', 'middle');
+        textElement.setAttribute('font-size', '3em');
+
+        const rectElement = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          'rect'
+        );
+        rectElement.setAttribute(
+          'x',
+          Number(randomElement.getAttribute('cx')) + 10
+        );
+        rectElement.setAttribute('y', randomElement.getAttribute('cy') - 50);
+        rectElement.setAttribute(
+          'width',
+          435
+        ); // Adjust the padding as needed
+        rectElement.setAttribute('height', 98); // Adjust the height as needed
+        rectElement.setAttribute('fill', 'rgb(251, 187, 1)');
+
+        randomElement.parentNode.append(textElement);
+        randomElement.parentNode.prepend(rectElement);
+
         setTimeout(() => {
           randomElement.style.strokeWidth = previousStrokeWidth;
           randomElement.style.fill = previousFill;
-        }, 1500);
+          randomElement.parentNode.removeChild(textElement);
+          randomElement.parentNode.removeChild(rectElement);
+        }, 2500);
       };
 
-      setInterval(changeItem, 2500);
+      setInterval(changeItem, 4000);
 
       modalC.addEventListener('click', e => {
         const withinBoundaries = e.composedPath().includes(modal);
