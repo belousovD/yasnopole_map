@@ -145,6 +145,48 @@
         <div class="map" style="width: 100%">
           <svg viewBox="0 0 5362 3909">
             <circle
+              data-id="gostinica-teplica"
+              cx="2330.9478"
+              cy="1866.2074"
+              r="33.796951"
+            />
+
+            <circle
+              data-id="plotos"
+              cx="1602.2656"
+              cy="2107.5984"
+              r="34.59531"
+            />
+
+            <circle
+              data-id="ploshadka-detskih-masterskih"
+              cx="2226.219"
+              cy="1114.0558"
+              r="33.796951"
+            />
+
+            <circle
+              data-id="kostrovoe-mesto"
+              cx="1000.5944"
+              cy="1416.8989"
+              r="29.452894"
+            />
+
+            <circle
+              data-id="detskaya-ploshadka-gnezda"
+              cx="2299.5244"
+              cy="2363.2778"
+              r="33.796951"
+            />
+
+            <circle
+              data-id="shar"
+              cx="861.72241"
+              cy="2198.5889"
+              r="40.176311"
+            />
+
+            <circle
               data-id="paseka"
               cx="1517.8285"
               cy="128.83426"
@@ -187,31 +229,10 @@
             />
 
             <circle
-              data-id="kostrovoe-mesto"
-              cx="1000.5944"
-              cy="1416.8989"
-              r="29.452894"
-            />
-
-            <circle
               data-id="glamping"
               cx="606.09735"
               cy="1649.0535"
               r="34.144218"
-            />
-
-            <circle
-              data-id="plotos"
-              cx="1602.2656"
-              cy="2107.5984"
-              r="34.59531"
-            />
-
-            <circle
-              data-id="shar"
-              cx="861.72241"
-              cy="2198.5889"
-              r="40.176311"
             />
 
             <circle
@@ -277,20 +298,6 @@
               r="40.303902"
             />
 
-            <circle
-              data-id="detskaya-ploshadka-gnezda"
-              cx="2299.5244"
-              cy="2363.2778"
-              r="33.796951"
-            />
-
-            <circle
-              data-id="gostinica-teplica"
-              cx="2330.9478"
-              cy="1866.2074"
-              r="33.796951"
-            />
-
             <circle data-id="sad" cx="1803.7526" cy="745.81848" r="33.796951" />
 
             <circle
@@ -304,13 +311,6 @@
               data-id="dom-byk"
               cx="2697.343"
               cy="584.83997"
-              r="33.796951"
-            />
-
-            <circle
-              data-id="ploshadka-detskih-masterskih"
-              cx="2226.219"
-              cy="1114.0558"
               r="33.796951"
             />
 
@@ -875,8 +875,15 @@
         });
       });
 
+      let currentIndex = 0;
       const changeItem = () => {
-        const randomIndex = Math.floor(Math.random() * 10);
+        let randomIndex;
+        if (currentIndex <= 5) {
+          randomIndex = currentIndex;
+          currentIndex++;
+        } else {
+          randomIndex = Math.floor(Math.random() * buildingsDots.length);
+        }
         const randomElement = buildingsDots[randomIndex];
         const previousStrokeWidth = randomElement.style.strokeWidth;
         const previousFill = randomElement.style.fill;
